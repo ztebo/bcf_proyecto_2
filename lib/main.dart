@@ -11,14 +11,13 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Proyecto 2 - Cuestionario',
-
+      title: 'Test App',
       theme: ThemeData(
         fontFamily: 'Montserrat',
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true
       ),
-      home: const MyHome(title: 'Proyecto 2 - Cuestionario',)
+      home: const QuestionsScreen(title: 'Test App',)
     );
     
   }

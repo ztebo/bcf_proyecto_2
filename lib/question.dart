@@ -2,17 +2,18 @@ import 'dart:math';
 
 class Question {
   // Declaración del método construtor de la clase
-  Question(this.question, this.answer, this.urlImage);
+  Question(this.question, this.answer, this.urlImage, this.feedback);
 
   String question;
-  String urlImage;
   String answer;
+  String urlImage;  
+  String feedback;
   
   // Lista de elementos de la clase Question
   static List<Question> questions = [
-    Question('Flutter es una librería de Python', 'Falso','null'),
-    Question('Un Widget es una función personalizada por el usuario ', 'Falso','null'),
-    Question('flutter pub get es un comando para obtener las dependencias del proyecto', 'Verdadero','null')
+    Question('Flutter es una librería de Python', 'Falso','null','Este es el feedback de la pregunta 1'),
+    Question('Un Widget es una función personalizada por el usuario ', 'Falso','null','Este es el feedback de la pregunta 2'),
+    Question('flutter pub get es un comando para obtener las dependencias del proyecto', 'Verdadero','null','Este es el feedback de la pregunta 3')
   ];
 
   static Question getRandomQuestion() {

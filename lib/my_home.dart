@@ -1,37 +1,57 @@
 import 'package:flutter/material.dart';
-import 'question_widget.dart';
+import 'questions_screen.dart';
 
 /*
-Widget home que incluye Scaffold para construir aplicación
+Widget home que incluye Scaffold para construir aplicación.
+Para este caso, se usa el body para alternar entre las diferentes pantallas
+que se requieren para la aplicación. Las pantallas o menús principales de la app son:
+1. Pantalla de bienvenida
+2. Pantalla de preguntas
+3. Pantalla de resultados
+
+Cada una de estas pantallas se encuentran en custom widgets
 */
 
 
-class MyHome extends StatefulWidget {
-  const MyHome({super.key, required this.title});
+class QuestionsScreen extends StatefulWidget {
+  const QuestionsScreen({super.key, required this.title});
 
   // Variable para el título de la app
   final String title;
 
   @override
-  State<MyHome> createState() => _MyHomeState();
+  State<QuestionsScreen> createState() => _QuestionsScreenState();
 }
 
-class _MyHomeState extends State<MyHome> {
+class _QuestionsScreenState extends State<QuestionsScreen> {
+
+  /*
+  Widgets utilizados en el body para alternar entre las
+  pantallas de bienvenida, preguntas y resultados
+  */
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Text(
           widget.title,
           style: const TextStyle(color: Colors.white),
         ),
       ),
-      // Se instancia custom widget hecho para las preguntas
-      body: const QuestionWidget(
+      /*
+      En el body del Scaffold se desplegará un widget que podrá ser el de bienvenida, 
+      de preguntas o el de resultados.       
+      */
+      body: const QuestionScreen(
         question: 'C# es el lenguaje que se usa para crear aplicaciones en Flutter',
-        currentScore: 10)
+        currentScore: 10,
+        pathBackground: "assets/images/fondo3.png",
+      )
       
     );
   }
