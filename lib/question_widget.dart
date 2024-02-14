@@ -1,30 +1,23 @@
 import 'package:flutter/material.dart';
+import 'question.dart';
 
 
 class QuestionWidget extends StatefulWidget {
   const QuestionWidget({
-    super.key,
-    required this.question,
-    required this.currentScore, }
+    super.key
+    }
   );
-
-  final String question;
-  final int currentScore;
-
+  
   @override
   State<QuestionWidget> createState() => _QuestionWidgetState();
 }
 
 class _QuestionWidgetState extends State<QuestionWidget> {
 
-
-  // Función para chequear si la respuesta ingresada es la correcta
-  void checkAnswer(bool isTrue) {
-    setState(() {
-      
-    });
-  }
-
+  // Para controlar la pregunta que se utiliza
+  int questionIndex = 0;
+  // Para controlar el registro de las respuestas
+  int countCorrect = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +31,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         Padding(
           padding: const EdgeInsets.only(left: 40, right: 40),
           child: Text(
-            widget.question,
+            'Pregunta ${questionIndex+1}: ${Question.questions[questionIndex].question}',
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.white,
@@ -72,7 +65,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         const SizedBox(height: 10),
         // Tercer elemento de la columna para desplegar el puntaje parcial del cuestionario
         Text(
-          'Puntuación actual: ${widget.currentScore}',
+          'Puntuación actual: $countCorrect',
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.white,
@@ -83,5 +76,105 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     );
   }
 
+  //Método para chequear si la respuesta ingresada es la correcta
+  void checkAnswer(bool isTrue) {
+    //Question actualQuestion = Question.getRandomQuestion();
+    String selectedAnswer = isTrue ? 'Verdadero' : 'Falso';
+    String correctAnswer = Question.questions[questionIndex].answer;
+    String feedbackAnswer =  Question.questions[questionIndex].feedback;
+    int countFinal = 0;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(          
+          title: Text(
+            selectedAnswer == correctAnswer ? '¡Correcto!':'¡Incorrecto!',
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 20),            
+          ),
+          content: Text(
+            feedbackAnswer,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 12),
+          ),
+          actions: [
+            TextButton(
+              //Lo que sucede al cerrar el cuadro de diálogo
+              onPressed: () {
+                Navigator.of(context).pop();
+                //Compara la respuesta seleccionada con la correcta e 
+                //incrementa el contador de preguntas correctas
+                //en caso de ser correcta
+                if (selectedAnswer == correctAnswer) {      
+                  setState(() {
+                    countCorrect ++;
+                    //Guarda puntaje final
+                    countFinal = countCorrect;         
+                  });                     
+                }
+                //Utiliza función para pasar el siguiente índice de la
+                //lista de preguntas                
+                bool restart = switchQuestion();                
+                //En caso de haberse reseteado el contador
+                //muestra diálogo indicando el término del cuestionario
+                if (restart) {
+                  showDialog(
+                    context: context,
+                    //Propiedad para evitar que el usuario cierre el cuadro de diálogo
+                    //si no es usando el botón que incluye
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text(
+                          'Cuestionario terminado',
+                          textAlign: TextAlign.center,
+                        ),
+                        content: Text(
+                          'Has completado todas las preguntas obteniendo $countFinal de 10 correctas',
+                          textAlign: TextAlign.center,),
+                        actions: [
+                          TextButton(                            
+                            onPressed: () {
+                              //Cierra el cuadro de diálogo
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Reiniciar Cuestionario'),
+                          )
+                        ]
+                      );
+                    }
+                  );
+                }
+              },
+              child: const Text('Siguiente pregunta')
+            )
+          ],          
+        );
+      }
+    );
+  }
+
+  /* 
+  Método para pasar al siguiente índice de la lista
+  en caso de haber terminado lo resetea
+  */
+  bool switchQuestion() {
+    
+    if (questionIndex < Question.questions.length - 1) {
+      setState(() {
+        questionIndex ++;
+      });      
+    }
+    else {
+      setState(() {
+        questionIndex = 0;
+        countCorrect = 0;
+      });      
+    }
+    //Retorna verdadero solo si se ha reseteado el índice
+    return questionIndex == 0;
+  }
 
 }

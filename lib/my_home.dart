@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'questions_screen.dart';
+import 'question.dart';
 
 /*
 Widget home que incluye Scaffold para construir aplicación.
@@ -25,14 +26,23 @@ class QuestionsScreen extends StatefulWidget {
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
 
+  // Rutas de las imágenes que se podrían usar para el fondo de los Scaffold
+  List<String> backgrounds = const [
+    "assets/images/fondo1.png",
+    "assets/images/fondo2.png",
+    "assets/images/fondo3.png",
+  ];
+
   /*
   Widgets utilizados en el body para alternar entre las
   pantallas de bienvenida, preguntas y resultados
+  borrar este comentario
   */
-
 
   @override
   Widget build(BuildContext context) {
+    
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -47,10 +57,8 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
       En el body del Scaffold se desplegará un widget que podrá ser el de bienvenida, 
       de preguntas o el de resultados.       
       */
-      body: const QuestionScreen(
-        question: 'C# es el lenguaje que se usa para crear aplicaciones en Flutter',
-        currentScore: 10,
-        pathBackground: "assets/images/fondo3.png",
+      body: QuestionScreen(
+        pathBackground: backgrounds[2],
       )
       
     );

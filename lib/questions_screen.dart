@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'question_widget.dart';
+import 'question.dart';
 
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({
     super.key,
-    required this.question,
-    required this.currentScore,
     required this.pathBackground
     }
   );
 
-  final String question;
-  final int currentScore;
+  // Variable para guardar ruta de la imagen
   final String pathBackground;  
 
   @override
@@ -21,8 +19,12 @@ class QuestionScreen extends StatefulWidget {
 
 class _QuestionScreenState extends State<QuestionScreen> {
 
+
   @override
   Widget build(BuildContext context) {
+
+    // Instanciar objeto  de la clase Question
+    // Question selectedQuestion = Question.questions[questionIndex];
 
     // Widget para desplegar la pregunta con los botones y la puntuación actual     
     return Container(        
@@ -33,10 +35,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             fit: BoxFit.fill
           ),
         ),
-        child: QuestionWidget(
-          question: widget.question,
-          currentScore: widget.currentScore,
-        )
+        child: const QuestionWidget()
       );
   }
 }
