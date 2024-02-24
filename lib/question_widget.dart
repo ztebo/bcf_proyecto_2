@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'question.dart';
+import 'global.dart' as globals;
 
 
 class QuestionWidget extends StatefulWidget {
@@ -40,7 +41,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 20
+              fontSize: 16
             ),
           ),
         ),
@@ -173,10 +174,12 @@ class _QuestionWidgetState extends State<QuestionWidget> {
       });      
     }
     else {
+      // Guarda puntaje en ranking top 10
+      globals.addToRanking(countCorrect);
       setState(() {
         questionIndex = 0;
         countCorrect = 0;
-      });      
+      });   
     }
     //Retorna verdadero solo si se ha reseteado el índice
     return questionIndex == 0;

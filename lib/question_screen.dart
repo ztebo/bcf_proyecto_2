@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'question_widget.dart';
 import 'global.dart' as globals;
-import 'package:proyecto2/question_screen.dart';
-import 'package:proyecto2/welcome_widget.dart';
-
-
 
 /*
 Widget home que contiene Scaffold para construir aplicación.
@@ -63,6 +59,5 @@ class _QuestionScreenState extends State<QuestionScreen> {
         ),
         child: QuestionWidget(selectedTopic: globals.selectedTopicGlobal)
       )
-    );    
-  }
+    );  }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:proyecto2/question.dart';
 import 'package:proyecto2/question_screen.dart';
 import 'global.dart' as globals;
-import 'question_widget.dart';
 
 /*
 Pantalla de bienvenida
@@ -30,7 +29,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
       context,
       MaterialPageRoute(
         builder: (_) => QuestionScreen(title: Question.topicNames[globals.selectedTopicGlobal]),
-        fullscreenDialog: true 
+        fullscreenDialog: true,
       ),
     );      
   }
@@ -79,10 +78,11 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
               child: const Text(
               'Rock progresivo'
               )
-            )
-          ],
-        )
-      );
+            ),
+            
+          ]
+        )        
+      );    
   }
 }
 
