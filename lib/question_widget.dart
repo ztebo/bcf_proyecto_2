@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'question.dart';
 
 
-class WidgetQuestion extends StatefulWidget {
-  const WidgetQuestion({
+class QuestionWidget extends StatefulWidget {
+  const QuestionWidget({
     super.key,
     required this.selectedTopic,
 
@@ -14,10 +14,10 @@ class WidgetQuestion extends StatefulWidget {
   final int selectedTopic;
   
   @override
-  State<WidgetQuestion> createState() => _WidgetQuestionState();
+  State<QuestionWidget> createState() => _QuestionWidgetState();
 }
 
-class _WidgetQuestionState extends State<WidgetQuestion> {
+class _QuestionWidgetState extends State<QuestionWidget> {
 
   // Para controlar la pregunta que se utiliza
   int questionIndex = 0;

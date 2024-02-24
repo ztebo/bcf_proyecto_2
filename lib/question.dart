@@ -52,6 +52,13 @@ class Question {
   Question('El rock progresivo declinó en popularidad durante los años 80 con la llegada de la música disco', 'Verdadero', 'null', 'Aunque el rock progresivo vio una disminución en su popularidad con el surgimiento de géneros como la música disco y el new wave, sigue teniendo una base de fans dedicada.')
   ];
 
+  // Lista de nombre de los tópicos de preguntas
+  static List<String> topicNames = [
+    'Flutter',
+    'Cultura Latinoamericana',
+    'Rock'
+  ];
+
   // Lista que contiene las 3 listas de preguntas, respuestas y feedback
   static List<List<Question>> questions = [questionsFlutter, questionsCultura, questionsRock];
 

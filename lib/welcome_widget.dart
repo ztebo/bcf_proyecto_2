@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto2/question.dart';
+import 'package:proyecto2/question_screen.dart';
 import 'global.dart' as globals;
-import 'widget_question.dart';
+import 'question_widget.dart';
 
 /*
 Pantalla de bienvenida
 */
 
-class ScreenWelcome extends StatefulWidget {
-  const ScreenWelcome({
+class WelcomeWidget extends StatefulWidget {
+  const WelcomeWidget({
     super.key,
     required this.pathBackground
     }
@@ -17,13 +19,20 @@ class ScreenWelcome extends StatefulWidget {
   final String pathBackground;
 
   @override
-  State<ScreenWelcome> createState() => _ScreenWelcomeState();
+  State<WelcomeWidget> createState() => _WelcomeWidgetState();
 }
 
-class _ScreenWelcomeState extends State<ScreenWelcome> {
+class _WelcomeWidgetState extends State<WelcomeWidget> {
 
   void setNew(int value){    
-      globals.modifyTopic(value);
+    globals.modifyTopic(value);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => QuestionScreen(title: Question.topicNames[globals.selectedTopicGlobal]),
+        fullscreenDialog: true 
+      ),
+    );      
   }
 
   @override
