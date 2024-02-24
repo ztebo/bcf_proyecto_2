@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
-import 'question_widget.dart';
-import 'question.dart';
+import 'widget_question.dart';
 
+/*
+Pantalla para desplegar una pregunta 
+*/
 
-class QuestionScreen extends StatefulWidget {
-  const QuestionScreen({
+class ScreenQuestions extends StatefulWidget {
+  const ScreenQuestions({
     super.key,
-    required this.pathBackground
+    required this.pathBackground,
+    required this.selectedTopic
     }
   );
 
   // Variable para guardar ruta de la imagen
   final String pathBackground;  
+  // Variable para indicar cual es el tópico seleccionado
+  final int selectedTopic;
 
   @override
-  State<QuestionScreen> createState() => _QuestionScreenState();
+  State<ScreenQuestions> createState() => _ScreenQuestionsState();
 }
 
-class _QuestionScreenState extends State<QuestionScreen> {
+class _ScreenQuestionsState extends State<ScreenQuestions> {
 
 
   @override
@@ -35,7 +40,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             fit: BoxFit.fill
           ),
         ),
-        child: const QuestionWidget()
+        child: WidgetQuestion(selectedTopic: widget.selectedTopic)
       );
   }
 }

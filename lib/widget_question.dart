@@ -2,22 +2,27 @@ import 'package:flutter/material.dart';
 import 'question.dart';
 
 
-class QuestionWidget extends StatefulWidget {
-  const QuestionWidget({
-    super.key
+class WidgetQuestion extends StatefulWidget {
+  const WidgetQuestion({
+    super.key,
+    required this.selectedTopic,
+
     }
   );
+
+  // variable para indicar cuál es el tópico seleccionado
+  final int selectedTopic;
   
   @override
-  State<QuestionWidget> createState() => _QuestionWidgetState();
+  State<WidgetQuestion> createState() => _WidgetQuestionState();
 }
 
-class _QuestionWidgetState extends State<QuestionWidget> {
+class _WidgetQuestionState extends State<WidgetQuestion> {
 
   // Para controlar la pregunta que se utiliza
   int questionIndex = 0;
   // Para controlar el registro de las respuestas
-  int countCorrect = 0;
+  int countCorrect = 0; 
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +36,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         Padding(
           padding: const EdgeInsets.only(left: 40, right: 40),
           child: Text(
-            'Pregunta ${questionIndex+1}: ${Question.questions[questionIndex].question}',
+            'Pregunta ${questionIndex+1}: ${Question.questions[widget.selectedTopic][questionIndex].question}',
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.white,
@@ -80,8 +85,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   void checkAnswer(bool isTrue) {
     //Question actualQuestion = Question.getRandomQuestion();
     String selectedAnswer = isTrue ? 'Verdadero' : 'Falso';
-    String correctAnswer = Question.questions[questionIndex].answer;
-    String feedbackAnswer =  Question.questions[questionIndex].feedback;
+    String correctAnswer = Question.questions[widget.selectedTopic][questionIndex].answer;
+    String feedbackAnswer =  Question.questions[widget.selectedTopic][questionIndex].feedback;
     int countFinal = 0;
 
     showDialog(
@@ -162,7 +167,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   */
   bool switchQuestion() {
     
-    if (questionIndex < Question.questions.length - 1) {
+    if (questionIndex < Question.questionsFlutter.length - 1) {
       setState(() {
         questionIndex ++;
       });      
