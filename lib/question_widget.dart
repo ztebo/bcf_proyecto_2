@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto2/welcome_screen.dart';
 import 'question.dart';
-import 'global.dart' as globals;
+import 'scores.dart';
+
 
 
 class QuestionWidget extends StatefulWidget {
@@ -56,7 +58,10 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                 backgroundColor: MaterialStateProperty.all(Colors.white),
                 minimumSize: MaterialStateProperty.all(const Size(120, 40))
               ),
-              child: const Text('Verdadero')
+              child: const Text(
+                'Verdadero',
+                style: TextStyle(color: Colors.black87),
+              )
             ),
             const SizedBox(width: 10),
             ElevatedButton(
@@ -65,7 +70,11 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                 backgroundColor: MaterialStateProperty.all(Colors.white),
                 minimumSize: MaterialStateProperty.all(const Size(120, 40))
               ),
-              child: const Text('Falso'))
+              child: const Text(
+                'Falso',
+                style: TextStyle(color: Colors.black87),
+              )
+            )
           ],
         ),
         const SizedBox(height: 10),
@@ -98,8 +107,12 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           title: Text(
             selectedAnswer == correctAnswer ? '¡Correcto!':'¡Incorrecto!',
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 20),            
+            style: const TextStyle(
+              fontSize: 20,
+            ),            
           ),
+          iconColor: (selectedAnswer == correctAnswer)? Colors.lightGreen:Colors.redAccent,
+          icon: (selectedAnswer == correctAnswer)? const Icon(Icons.check_circle):const Icon(Icons.cancel),          
           content: Text(
             feedbackAnswer,
             textAlign: TextAlign.center,
@@ -117,12 +130,12 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   setState(() {
                     countCorrect ++;
                     //Guarda puntaje final
-                    countFinal = countCorrect;         
                   });                     
                 }
+                countFinal = countCorrect;  
                 //Utiliza función para pasar el siguiente índice de la
                 //lista de preguntas                
-                bool restart = switchQuestion();                
+                bool restart = switchQuestion(widget.selectedTopic);                
                 //En caso de haberse reseteado el contador
                 //muestra diálogo indicando el término del cuestionario
                 if (restart) {
@@ -145,8 +158,26 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                             onPressed: () {
                               //Cierra el cuadro de diálogo
                               Navigator.of(context).pop();
+                              goHome();                              
                             },
-                            child: const Text('Reiniciar Cuestionario'),
+                            style: TextButton.styleFrom(
+                              backgroundColor: const Color.fromARGB(20,100, 100, 100)
+                            ),
+                            child: const Text(
+                              'Volver a inicio',
+                              style: TextStyle(color: Colors.black87),
+                            ),
+                          ),
+                          TextButton(                            
+                            onPressed: () {
+                              //Cierra el cuadro de diálogo
+                              Navigator.of(context).pop();
+                            },
+                            style: TextButton.styleFrom(backgroundColor:  const Color.fromARGB(20,100, 100, 100)),
+                            child: const Text(
+                              'Reiniciar Cuestionario',
+                              style: TextStyle(color: Colors.black87),
+                            ),
                           )
                         ]
                       );
@@ -154,7 +185,11 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   );
                 }
               },
-              child: const Text('Siguiente pregunta')
+              style: TextButton.styleFrom(backgroundColor:  const Color.fromARGB(20,100, 100, 100)),
+              child: const Text(
+                'Siguiente pregunta',
+                style: TextStyle(color: Colors.black87),
+              )
             )
           ],          
         );
@@ -166,23 +201,36 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   Método para pasar al siguiente índice de la lista
   en caso de haber terminado lo resetea
   */
-  bool switchQuestion() {
+  bool switchQuestion(int indexTopic) {
     
-    if (questionIndex < Question.questionsFlutter.length - 1) {
+    if (questionIndex < Question.questions[indexTopic].length - 1) {
       setState(() {
         questionIndex ++;
       });      
     }
     else {
-      // Guarda puntaje en ranking top 10
-      globals.addToRanking(countCorrect);
+      
       setState(() {
+        // Guarda puntaje en ranking top 10
+        Scores.addScore(countCorrect, indexTopic);
         questionIndex = 0;
         countCorrect = 0;
       });   
     }
     //Retorna verdadero solo si se ha reseteado el índice
     return questionIndex == 0;
+  }
+
+
+  void goHome(){
+    // volver a pantalla de inicio correspondiente a WelcomeScreen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const WelcomeScreen(title: 'Proyecto 2 - Cuestionario'),
+        fullscreenDialog: true,
+      ),
+    );      
   }
 
 }

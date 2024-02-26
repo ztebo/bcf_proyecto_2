@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'question_widget.dart';
-import 'global.dart' as globals;
+import 'question.dart';
 
 /*
 Widget home que contiene Scaffold para construir aplicación.
@@ -15,10 +15,15 @@ Cada una de estas pantallas se encuentran en custom widgets
 
 
 class QuestionScreen extends StatefulWidget {
-  const QuestionScreen({super.key, required this.title});
+  const QuestionScreen({
+    super.key,
+    required this.title,
+    required this.pathBackground
+  });
 
   // Variable para el título de la app
   final String title;
+  final String pathBackground;
 
   @override
   State<QuestionScreen> createState() => _QuestionScreenState();
@@ -51,13 +56,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
       // Se usa widget de bienvenida
       body: Container(        
         alignment: Alignment.center,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/fondo4.png"),
+            image: AssetImage(widget.pathBackground),
             fit: BoxFit.fill
           ),
         ),
-        child: QuestionWidget(selectedTopic: globals.selectedTopicGlobal)
+        child: QuestionWidget(selectedTopic: Question.selectedTopic)
       )
     );  }
 }

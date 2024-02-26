@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto2/question.dart';
 import 'package:proyecto2/question_screen.dart';
-import 'global.dart' as globals;
+import 'top_scores_widget.dart';
+
+
 
 /*
 Pantalla de bienvenida
@@ -24,11 +26,14 @@ class WelcomeWidget extends StatefulWidget {
 class _WelcomeWidgetState extends State<WelcomeWidget> {
 
   void setNew(int value){    
-    globals.modifyTopic(value);
-    Navigator.push(
+    Question.modifyTopic(value);
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (_) => QuestionScreen(title: Question.topicNames[globals.selectedTopicGlobal]),
+        builder: (_) => QuestionScreen(
+          title: Question.topicNames[Question.selectedTopic],
+          pathBackground: Question.pathTopicBackgrounds[Question.selectedTopic],
+          ),
         fullscreenDialog: true,
       ),
     );      
@@ -54,35 +59,41 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Seleccionar Tópico',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20
-              ),
-            ),
-            const SizedBox(height: 20,),
+                  'Seleccionar Tópico',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20
+                  ),
+                ),
+            const SizedBox(height: 10,),
             ElevatedButton(
               onPressed:() => {setNew(0)},
               child: const Text(
               'Flutter'
               )
             ),
+            const TopScores(indexTopic: 0),
+            const SizedBox(height: 10,),
             ElevatedButton(
               onPressed:() => {setNew(1)},
               child: const Text(
               'Cultura latinoamericana'
               )
             ),
+            const TopScores(indexTopic: 1),
+            const SizedBox(height: 10,),
             ElevatedButton(
               onPressed:() => {setNew(2)},
               child: const Text(
               'Rock progresivo'
               )
             ),
-            
+            const TopScores(indexTopic: 2), 
           ]
         )        
-      );    
+    );    
   }
 }
+
+
 

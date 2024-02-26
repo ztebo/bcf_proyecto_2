@@ -24,6 +24,9 @@ flutter:
     - assets/images/fondo3.png
     - assets/images/fondo4.png
     - assets/images/fondo5.png
+    - assets/images/fondo6.png
+    - assets/images/fondo7.png
+    - assets/images/fondo8.png
 
   fonts:
     - family: Montserrat

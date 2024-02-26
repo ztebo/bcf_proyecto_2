@@ -51,7 +51,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ),
       // Se usa widget de bienvenida
       body: const WelcomeWidget(
-        pathBackground: "assets/images/fondo3.png",
+        pathBackground: "assets/images/fondo4.png",
       ),
     );
   }

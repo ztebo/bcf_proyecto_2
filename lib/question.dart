@@ -1,4 +1,9 @@
+library globals;
+
 import 'dart:math';
+
+import 'package:flutter/material.dart';
+
 
 class Question {
   // Declaración del método construtor de la clase
@@ -8,6 +13,9 @@ class Question {
   String answer;
   String urlImage;  
   String feedback;
+
+  //variable global para alternar pantalla
+  static int selectedTopic = 0;
   
   // Lista de elementos de la clase Question de tópico Flutter
   static List<Question> questionsFlutter = [
@@ -59,6 +67,13 @@ class Question {
     'Rock'
   ];
 
+  // Lista de las rutas de las imágenes de fondo
+  static List<String> pathTopicBackgrounds = [
+    "assets/images/fondo6.png",
+    "assets/images/fondo7.png",
+    "assets/images/fondo8.png"
+  ];
+
   // Lista que contiene las 3 listas de preguntas, respuestas y feedback
   static List<List<Question>> questions = [questionsFlutter, questionsCultura, questionsRock];
 
@@ -77,6 +92,14 @@ class Question {
     
     // Retorna una pregunta de la variable questions usando con el índice index
     return questions[indexTopic][indexQuestion];
+  }
+
+
+
+  //para modificar el valor de la variable global
+  static void modifyTopic(int value) {
+    selectedTopic = value;
+    debugPrint('Valores modificados');
   }
 
 }
