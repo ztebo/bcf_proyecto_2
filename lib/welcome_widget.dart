@@ -1,13 +1,13 @@
+/*
+Widget para presentar tópicos de los cuestionarios y los 
+top 5 de los puntajes por cada tópico.
+Incluye también el botón para iniciar el cuestionario de cada tópico
+*/
+
 import 'package:flutter/material.dart';
 import 'package:proyecto2/question.dart';
 import 'package:proyecto2/question_screen.dart';
 import 'top_scores_widget.dart';
-
-
-
-/*
-Pantalla de bienvenida
-*/
 
 class WelcomeWidget extends StatefulWidget {
   const WelcomeWidget({
@@ -41,9 +41,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-
-    // Instanciar objeto  de la clase Question
-    // Question selectedQuestion = Question.questions[questionIndex];
 
     // Widget para desplegar la pregunta con los botones y la puntuación actual     
     return Container(        

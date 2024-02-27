@@ -1,10 +1,3 @@
-library globals;
-
-import 'dart:math';
-
-import 'package:flutter/material.dart';
-
-
 class Question {
   // Declaración del método construtor de la clase
   Question(this.question, this.answer, this.urlImage, this.feedback);
@@ -77,29 +70,19 @@ class Question {
   // Lista que contiene las 3 listas de preguntas, respuestas y feedback
   static List<List<Question>> questions = [questionsFlutter, questionsCultura, questionsRock];
 
-  //
-  static Question getRandomQuestion() {
-    /*
-      Método para obtener una pregunta de forma aleatoria, se declara de forma
-      estática para poder usar el método sin necesidad de instanciar la clase
-    */
-    // Se instancia objeto Random para poder crear un número aleatorio
-    Random random = Random();
-    // Selecciona un índice dentro de la lista de listas
-    int indexTopic = random.nextInt(questions.length);
-    // Se crea un número aleatorio dentro del rango de los índices de la lista seleccionada
-    int indexQuestion = random.nextInt(questions[indexTopic].length);
-    
-    // Retorna una pregunta de la variable questions usando con el índice index
-    return questions[indexTopic][indexQuestion];
-  }
-
-
-
   //para modificar el valor de la variable global
   static void modifyTopic(int value) {
+    /*
+    Modifica el valor del tópico seleccionado
+
+    Params:
+    - value: índice que se requiere seleccionar
+
+    Output:
+    Solo modifica la variable estatica para ser usada desde cualquier parte del código de la aplicación.
+    */
     selectedTopic = value;
-    debugPrint('Valores modificados');
+    //debugPrint('Valores modificados');
   }
 
 }

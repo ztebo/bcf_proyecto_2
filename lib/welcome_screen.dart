@@ -1,19 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:proyecto2/welcome_widget.dart';
-
-
-
 /*
-Widget home que contiene Scaffold para construir aplicación.
-Para este caso, se usa el body para alternar entre las diferentes pantallas
-que se requieren para la aplicación. Las pantallas o menús principales de la app son:
-1. Pantalla de bienvenida
-2. Pantalla de preguntas
-3. Pantalla de resultados
-
-Cada una de estas pantallas se encuentran en custom widgets
+Scaffold para presentar pantalla de bienvenida
 */
 
+import 'package:flutter/material.dart';
+import 'package:proyecto2/welcome_widget.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key, required this.title});
@@ -26,16 +16,7 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-
-
-  /*
-  Widgets utilizados en el body para alternar entre las
-  pantallas de bienvenida, preguntas y resultados
-  borrar este comentario
-  */
-
-
-
+  
   @override
   Widget build(BuildContext context) {    
         

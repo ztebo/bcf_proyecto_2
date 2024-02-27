@@ -1,18 +1,15 @@
-import 'package:flutter/material.dart';
-import 'question_widget.dart';
-import 'question.dart';
-
 /*
-Widget home que contiene Scaffold para construir aplicación.
-Para este caso, se usa el body para alternar entre las diferentes pantallas
-que se requieren para la aplicación. Las pantallas o menús principales de la app son:
-1. Pantalla de bienvenida
-2. Pantalla de preguntas
-3. Pantalla de resultados
-
-Cada una de estas pantallas se encuentran en custom widgets
+Scaffold para presentar el widget de preguntas.
+En el constructor de la clase se permite el ingreso de la ruta de la imagen que
+será utilizada de fondo.
 */
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:proyecto2/welcome_screen.dart';
+import 'question_widget.dart';
+import 'question.dart';
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({
@@ -30,15 +27,6 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-
-
-  /*
-  Widgets utilizados en el body para alternar entre las
-  pantallas de bienvenida, preguntas y resultados
-  borrar este comentario
-  */
-
-
 
   @override
   Widget build(BuildContext context) {    
@@ -62,7 +50,38 @@ class _QuestionScreenState extends State<QuestionScreen> {
             fit: BoxFit.fill
           ),
         ),
-        child: QuestionWidget(selectedTopic: Question.selectedTopic)
+        child: Stack(
+          children: [
+            Center(
+              child: QuestionWidget(
+                selectedTopic: Question.selectedTopic
+              )
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: IconButton(
+                onPressed: goHome,
+                color: Colors.white,
+                icon: const Icon(
+                  Icons.home,
+                  size: 50,
+                )                  
+              ),
+            )
+          ]
+        )
       )
     );  }
+
+
+  void goHome(){
+    // volver a pantalla de inicio correspondiente a WelcomeScreen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const WelcomeScreen(title: 'Proyecto 2 - Cuestionario'),
+        fullscreenDialog: true,
+      ),
+    );      
+  } 
 }

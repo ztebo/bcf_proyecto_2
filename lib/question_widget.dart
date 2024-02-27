@@ -1,15 +1,17 @@
+/*
+Widget para desplegar la información asociada a la pregunta según tópico seleccionado
+El tópico queda fijado en el constructor del widget
+*/
+
 import 'package:flutter/material.dart';
 import 'package:proyecto2/welcome_screen.dart';
 import 'question.dart';
 import 'scores.dart';
 
-
-
 class QuestionWidget extends StatefulWidget {
   const QuestionWidget({
     super.key,
     required this.selectedTopic,
-
     }
   );
 
@@ -24,13 +26,12 @@ class _QuestionWidgetState extends State<QuestionWidget> {
 
   // Para controlar la pregunta que se utiliza
   int questionIndex = 0;
-  // Para controlar el registro de las respuestas
+  // Para mentener el conteo de respuestas correctas
   int countCorrect = 0; 
 
   @override
   Widget build(BuildContext context) {
-
-    // Widget para desplegar la pregunta con los botones y la puntuación actual     
+    
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -39,6 +40,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         Padding(
           padding: const EdgeInsets.only(left: 40, right: 40),
           child: Text(
+            // Texto para presentar el número de pregunta y la pregunta
             'Pregunta ${questionIndex+1}: ${Question.questions[widget.selectedTopic][questionIndex].question}',
             textAlign: TextAlign.center,
             style: const TextStyle(
@@ -91,14 +93,28 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     );
   }
 
-  //Método para chequear si la respuesta ingresada es la correcta
   void checkAnswer(bool isTrue) {
-    //Question actualQuestion = Question.getRandomQuestion();
+    /* 
+    Método para chequear si la respuesta ingresada es la correcta
+
+    Params:
+    - isTrue: índice del tópico en e lque se desea hacer el cambio a la siguiente pregunta
+
+    Output:
+    Retorna una variable de tipo boolean que permite indicar si es que se ha llegado
+    al fin de las preguntas del tópico seleccionado 
+    */
+    
     String selectedAnswer = isTrue ? 'Verdadero' : 'Falso';
     String correctAnswer = Question.questions[widget.selectedTopic][questionIndex].answer;
     String feedbackAnswer =  Question.questions[widget.selectedTopic][questionIndex].feedback;
     int countFinal = 0;
 
+    /*
+    Despliega cuadro de diálogo presentando feedback sobre la pregunta además
+    de mostrar botones contextuales dependiendo de si se ha llegado al final
+    de las preguntas del tópico
+    */
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -111,6 +127,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
               fontSize: 20,
             ),            
           ),
+          // Íconos dinámicos según evaluación de la respuesta
           iconColor: (selectedAnswer == correctAnswer)? Colors.lightGreen:Colors.redAccent,
           icon: (selectedAnswer == correctAnswer)? const Icon(Icons.check_circle):const Icon(Icons.cancel),          
           content: Text(
@@ -120,29 +137,29 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           ),
           actions: [
             TextButton(
-              //Lo que sucede al cerrar el cuadro de diálogo
+              // Lo que sucede al cerrar el cuadro de diálogo
               onPressed: () {
                 Navigator.of(context).pop();
-                //Compara la respuesta seleccionada con la correcta e 
-                //incrementa el contador de preguntas correctas
-                //en caso de ser correcta
+                // Compara la respuesta seleccionada con la correcta e 
+                // incrementa el contador de preguntas correctas
+                // en caso de ser correcta
                 if (selectedAnswer == correctAnswer) {      
                   setState(() {
                     countCorrect ++;
-                    //Guarda puntaje final
+                    // Guarda puntaje final
                   });                     
                 }
                 countFinal = countCorrect;  
-                //Utiliza función para pasar el siguiente índice de la
-                //lista de preguntas                
+                // Utiliza función para pasar el siguiente índice de la
+                // lista de preguntas                
                 bool restart = switchQuestion(widget.selectedTopic);                
-                //En caso de haberse reseteado el contador
-                //muestra diálogo indicando el término del cuestionario
+                // En caso de haberse reseteado el contador
+                // muestra diálogo indicando el término del cuestionario
                 if (restart) {
                   showDialog(
                     context: context,
-                    //Propiedad para evitar que el usuario cierre el cuadro de diálogo
-                    //si no es usando el botón que incluye
+                    // Propiedad para evitar que el usuario cierre el cuadro de diálogo
+                    // si no es usando el botón que incluye
                     barrierDismissible: false,
                     builder: (BuildContext context) {
                       return AlertDialog(
@@ -197,11 +214,20 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     );
   }
 
-  /* 
-  Método para pasar al siguiente índice de la lista
-  en caso de haber terminado lo resetea
-  */
+  
   bool switchQuestion(int indexTopic) {
+    /* 
+    Método para pasar al siguiente índice de la lista
+    en caso de haber terminado lo resetea
+    También se encarga de agregar el puntaje obtenido al registro de la clase Scores
+
+    Params:
+    - indexTopic: índice del tópico en e lque se desea hacer el cambio a la siguiente pregunta
+
+    Output:
+    Retorna una variable de tipo boolean que permite indicar si es que se ha llegado
+    al fin de las preguntas del tópico seleccionado 
+    */
     
     if (questionIndex < Question.questions[indexTopic].length - 1) {
       setState(() {
@@ -221,9 +247,11 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     return questionIndex == 0;
   }
 
-
   void goHome(){
-    // volver a pantalla de inicio correspondiente a WelcomeScreen
+    /*
+    Volver a pantalla de inicio correspondiente a WelcomeScreen
+    */
+    
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
